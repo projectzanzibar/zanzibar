@@ -1,0 +1,5 @@
+# Prevent uploading build artifacts and local folders
+.next
+out
+node_modules
+.vercel
