@@ -1,17 +1,17 @@
 export const getTravelAssistance = async (userMessage: string): Promise<string> => {
-  try {
-    const res = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: userMessage }),
-    });
-    if (!res.ok) {
-      return "I'm sorry, I couldn't process that request right now.";
-    }
-    const data = await res.json();
-    return (data.text as string) ?? "I couldn't process that request right now.";
-  } catch (error) {
-    console.error('Chat API Error:', error);
-    return "I'm having trouble connecting to the island network right now. Please try again later!";
-  }
+  // Mocked response to avoid external API usage for easy deployment
+  const cannedReplies = [
+    "Jambo! We offer airport transfers, tours, and taxis across Zanzibar. Tell me your pickup and drop-off to get a quote.",
+    "We recommend June–Oct or Jan–Feb for the best weather. How can I help plan your trip?",
+    "Sample prices: Airport→Stone Town ($15), Airport→North ($45), Airport→East ($40).",
+  ];
+  const reply = cannedReplies[(Math.abs(hashCode(userMessage)) % cannedReplies.length)];
+  await new Promise(r => setTimeout(r, 400));
+  return reply;
 };
+
+function hashCode(str: string): number {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = ((h << 5) - h) + str.charCodeAt(i) | 0;
+  return h;
+}
